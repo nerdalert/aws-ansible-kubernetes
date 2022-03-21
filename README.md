@@ -75,6 +75,7 @@ secret_key: <add_secret_key_here>
   agnostic as possible to all installations.
 
 ```yaml
+# ansible.cfg
 [defaults]
 # this is an default inventory location, user can change it accordingly
 host_key_checking = false
@@ -98,6 +99,7 @@ become_ask_pass = true
   of the project. Here are some example values.
 
 ```yaml
+# env.yaml
 aws_region: us-east-1                 # AWS region
 vpc_id: vpc-xxxxxxxx                  # VPC id from your aws account
 aws_subnet: subnet-xxxxxxxx           # VPC subnet id from your aws account
@@ -167,22 +169,7 @@ Assuming that runs with no issues, your k8s deployment is up and running.
 
 ### Verify the Kubernetes Deployment
 
-You can find the addresses for the installed nodes in `ip.txt`
-
-```yaml
-[masterNode]
-3.84.200.218 ansible_user=fedora ansible_connection=ssh
-
-[workerNode]
-54.226.69.231 ansible_user=fedora ansible_connection=ssh
-54.226.101.8 ansible_user=fedora ansible_connection=ssh
-34.235.143.35 ansible_user=fedora ansible_connection=ssh
-3.94.190.207 ansible_user=fedora ansible_connection=ssh
-3.88.3.101 ansible_user=fedora ansible_connection=ssh
-18.212.246.28 ansible_user=fedora ansible_connection=ssh
-```
-
-- Connect and verify the installation:
+- Connect and verify the installation by grabbing an address out of your Ansible inventory in `ip.txt`:
 
 ```sh
 # ssh to the master node. you can look in ip.txt for the ip address
