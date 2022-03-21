@@ -1,0 +1,55 @@
+---
+# tasks file for k8s-master
+- name: Install k3s on the master node
+  shell: curl -sfL https://get.k3s.io | sh -
+  ignore_errors: True
+
+- name: Wait for kubeconfig to be created
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    state: present
+    timeout: 30
+  ignore_errors: True
+
+- name: Creating the .kube directory
+  file:
+    path: /home/{{ ansible_user }}/.kube/
+    state: directory
+-
+- name: Copying kubeconfig to .kube directory
+  copy:
+    remote_src: yes
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /home/{{ ansible_user }}/.kube/config
+
+- name: Change the owner of .kube/config
+  shell: "sudo chown $(id -u {{ ansible_user }}):$(id -g {{ ansible_user }}) /home/{{ ansible_user }}/.kube/config"
+
+- name: Register the join token
+  command: cat node-token chdir=/var/lib/rancher/k3s/server
+  register: k8s_token
+
+- name: Display the worker join token
+  debug:
+    msg: "{{ k8s_token.stdout }}"
+
+- local_action:
+    module: copy
+    content: "{{ k8s_token.stdout }}"
+    dest: k8s_join-token
+
+- name: Set the join token
+  set_fact:
+    k8s_token: "{{ k8s_token.stdout }}"
+
+- name: Register the K8s master hostname
+  command: hostname
+  register: k8s_master
+
+- name: Set the K8s master hostname variable
+  set_fact:
+    k8s_master: "{{ k8s_master.stdout }}"
+
+- name: Display the master hostname
+  debug:
+    msg: "{{ k8s_master }}"

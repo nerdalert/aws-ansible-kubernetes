@@ -1,0 +1,10 @@
+
+- hosts: masterNode
+  vars_files:
+    - vars.yml
+  roles:
+    - role: k8s-master
+
+- hosts: workerNode
+  roles:
+    - role: k8s-worker
