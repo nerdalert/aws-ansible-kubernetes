@@ -3,9 +3,9 @@
 This repo fully automates the deployment of Kubernetes on EC2 and can scale out dynamically to however
 many worker nodes desired. The playbooks use the latest changes to the `amazon.aws.ec2_instance` module.
 
-Currently the Kubernetes ditribution is [K3s](https://github.com/k3s-io/k3s) as I am using this for datapath
+Currently, the Kubernetes distribution is [K3s](https://github.com/k3s-io/k3s) as I am using this for datapath
 performance testing, so the lighter the weight the better for my needs. I will be adding Microshift as an
-alternative lightweght distribution as soon as this PR merges [Allow MicroShift to join new worker nodes](https://github.com/redhat-et/microshift/pull/471).
+alternative lightweight distribution as soon as this PR merges [Allow MicroShift to join new worker nodes](https://github.com/redhat-et/microshift/pull/471).
 
 ### Prerequisites
 
@@ -13,7 +13,7 @@ alternative lightweght distribution as soon as this PR merges [Allow MicroShift 
 - An active AWS account. The default profiles and VPCs are sufficient. The default instance type used
   is `t2.micro` which is free tier eligible. The default AMI image used is Fedora but can be changed to
   any Linux flavor in the ENV file shown in the next section.
-- Python (newer the version the better), latest version can be found at [Download the latest version of Python](https://www.python.org/downloads/)
+- Python - (newer the version the better) latest version can be found at [Download the latest version of Python](https://www.python.org/downloads/)
 - Ansible - instructions in next section or at [Installing Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible)
 
 
